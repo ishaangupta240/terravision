@@ -1,0 +1,56 @@
+.aurora-wrapper {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at 20% 20%, rgba(30, 139, 195, 0.15), transparent 55%),
+    radial-gradient(circle at 80% 10%, rgba(203, 67, 255, 0.2), transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(30, 195, 169, 0.15), transparent 50%),
+    #020314;
+  z-index: 0;
+}
+
+.aurora-layer {
+  position: absolute;
+  width: 140%;
+  height: 140%;
+  top: -10%;
+  left: -20%;
+  background: radial-gradient(
+      circle at 30% 40%,
+      hsla(var(--hue), 100%, 75%, 0.22),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 70% 60%,
+      hsla(calc(var(--hue) + 40), 100%, 65%, 0.18),
+      transparent 60%
+    );
+  filter: blur(28px);
+  mix-blend-mode: screen;
+}
+
+.stars {
+  position: absolute;
+  inset: -20%;
+  background-image: radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.5), transparent),
+    radial-gradient(2px 2px at 240px 120px, rgba(255, 255, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 340px 200px, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(2px 2px at 420px 260px, rgba(255, 255, 255, 0.7), transparent);
+  background-size: 200px 200px;
+  opacity: 0.32;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 120px 120px;
+  opacity: 0.2;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.6) 0%, transparent 70%);
+}
+

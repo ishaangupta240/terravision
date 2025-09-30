@@ -1,0 +1,168 @@
+.passport-card {
+  position: relative;
+  padding: 3rem;
+  border-radius: 1.6rem;
+  border: 1px solid rgba(134, 255, 255, 0.28);
+  background: linear-gradient(135deg, rgba(11, 58, 94, 0.85), rgba(18, 20, 69, 0.88));
+  box-shadow: 0 0 60px rgba(36, 195, 255, 0.25);
+  backdrop-filter: blur(24px);
+  color: #dbf7ff;
+  max-width: 680px;
+  width: min(90vw, 720px);
+  overflow: hidden;
+}
+
+.passport-card::before,
+.passport-card::after {
+  content: '';
+  position: absolute;
+  inset: -120% -50% 50% -50%;
+  background: conic-gradient(
+    from 140deg,
+    rgba(0, 212, 255, 0.4),
+    rgba(156, 77, 255, 0.2),
+    rgba(0, 212, 255, 0)
+  );
+  transform: rotate(8deg);
+  pointer-events: none;
+}
+
+.passport-card::after {
+  inset: -100% -40% 60% -40%;
+  transform: rotate(-6deg);
+  opacity: 0.8;
+}
+
+.passport-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.passport-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.85rem;
+  color: rgba(200, 245, 255, 0.76);
+}
+
+.passport-header strong {
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+}
+
+.passport-id {
+  margin-top: 2.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.32em;
+  font-size: 0.9rem;
+  color: rgba(175, 245, 255, 0.6);
+}
+
+.passport-id strong {
+  font-weight: 600;
+  color: #6ef0ff;
+}
+
+.passport-grid {
+  margin-top: 2.2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.4rem;
+}
+
+.passport-grid span {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  color: rgba(175, 245, 255, 0.7);
+}
+
+.passport-grid p {
+  margin-top: 0.5rem;
+  font-size: 1.3rem;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #ffffff;
+}
+
+.passport-footer {
+  margin-top: 2.8rem;
+  display: grid;
+  gap: 1.4rem;
+}
+
+.passport-footer p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(214, 248, 255, 0.82);
+}
+
+.passport-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.launch {
+  justify-self: start;
+}
+
+.secondary {
+  background: rgba(8, 22, 60, 0.75);
+  color: rgba(168, 230, 255, 0.85);
+  border: 1px solid rgba(79, 223, 255, 0.35);
+  box-shadow: 0 0 18px rgba(79, 223, 255, 0.15);
+}
+
+.secondary:disabled {
+  opacity: 0.6;
+  cursor: progress;
+  box-shadow: none;
+}
+
+.download-feedback {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(168, 230, 255, 0.7);
+}
+
+.passport-qr {
+  margin-top: 2.4rem;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.4rem;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(134, 255, 255, 0.18);
+  background: rgba(6, 16, 48, 0.6);
+  align-self: flex-start;
+}
+
+.passport-qr span {
+  font-size: 0.75rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(168, 230, 255, 0.7);
+}
+
+@media (max-width: 640px) {
+  .passport-card {
+    padding: 2.2rem;
+  }
+
+  .passport-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .passport-grid {
+    grid-template-columns: 1fr;
+  }
+}

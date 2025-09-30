@@ -1,0 +1,288 @@
+
+.earth-journey {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.9fr);
+  gap: clamp(3rem, 6vw, 4.8rem);
+  align-items: start;
+  padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5.5rem) clamp(6rem, 12vw, 8.5rem);
+  color: #dbf7ff;
+  min-height: 100vh;
+}
+
+.earth-column {
+  position: sticky;
+  top: clamp(4.5rem, 10vw, 7rem);
+  display: grid;
+  gap: 1.8rem;
+  transform-style: preserve-3d;
+  transform: perspective(1600px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.38s ease;
+  width: 100%;
+}
+
+.earth-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: clamp(520px, 78vh, 880px);
+  border-radius: 1.6rem;
+  overflow: hidden;
+  border: 1px solid rgba(126, 246, 255, 0.25);
+  background: radial-gradient(circle at 30% 20%, rgba(60, 110, 255, 0.35), transparent 70%),
+    radial-gradient(circle at 70% 80%, rgba(0, 210, 255, 0.28), transparent 60%),
+    rgba(4, 8, 26, 0.9);
+  filter: drop-shadow(0 40px 80px rgba(10, 25, 60, 0.55));
+}
+
+.earth-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+}
+
+.earth-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(6, 16, 45, 0.85);
+  border: 1px dashed rgba(126, 246, 255, 0.25);
+  color: rgba(173, 246, 255, 0.76);
+  font-size: 0.95rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.earth-annotations {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.earth-annotation {
+  position: absolute;
+  max-width: clamp(160px, 22vw, 240px);
+  padding: 0.85rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(126, 246, 255, 0.24);
+  background: rgba(4, 12, 32, 0.75);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 40px rgba(4, 12, 28, 0.45);
+  display: grid;
+  gap: 0.45rem;
+  pointer-events: auto;
+  opacity: 0.92;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+.earth-annotation span {
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.62rem;
+  color: rgba(173, 246, 255, 0.82);
+}
+
+.earth-annotation p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgba(225, 248, 255, 0.82);
+}
+
+.earth-annotation.anchor-north {
+  top: clamp(6%, 10vh, 16%);
+  left: clamp(6%, 10vw, 18%);
+}
+
+.earth-annotation.anchor-east {
+  top: 50%;
+  right: clamp(4%, 7vw, 10%);
+  transform: translateY(-50%);
+}
+
+.earth-annotation.anchor-southwest {
+  bottom: clamp(5%, 8vh, 12%);
+  left: clamp(5%, 9vw, 14%);
+}
+
+.earth-caption {
+  border-left: 3px solid var(--phase-color, rgba(126, 246, 255, 0.5));
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 0.25rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: rgba(200, 245, 255, 0.75);
+}
+
+.earth-caption strong {
+  font-size: 1.3rem;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+}
+
+.phases-column {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3rem);
+}
+
+.phases-intro {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.phases-intro h1 {
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  letter-spacing: 0.08em;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.phases-intro p {
+  line-height: 1.8;
+  color: rgba(203, 240, 255, 0.82);
+  max-width: 620px;
+}
+
+.phases-stack {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 2.3rem);
+}
+
+.phase-card {
+  position: relative;
+  padding: clamp(2.2rem, 4.2vw, 2.8rem) clamp(1.7rem, 4.2vw, 2.7rem);
+  border-radius: 1.4rem;
+  border: 1px solid rgba(120, 240, 255, 0.18);
+  background: rgba(8, 16, 48, 0.76);
+  box-shadow: 0 22px 45px rgba(7, 16, 42, 0.38);
+}
+
+.phase-card.is-active {
+  border-color: var(--phase-color, rgba(126, 246, 255, 0.5));
+  box-shadow: 0 35px 70px rgba(14, 40, 90, 0.3), 0 0 18px var(--phase-color, rgba(126, 246, 255, 0.35));
+}
+
+.phase-card h2 {
+  margin-top: 1.2rem;
+  font-size: 1.7rem;
+  color: #ffffff;
+}
+
+.phase-card p {
+  margin-top: 0.9rem;
+  line-height: 1.7;
+  color: rgba(204, 236, 255, 0.82);
+}
+
+.phase-card ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.8rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.phase-card li {
+  position: relative;
+  padding-left: 1.4rem;
+  color: rgba(214, 244, 255, 0.86);
+  letter-spacing: 0.01em;
+}
+
+.phase-card li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: var(--phase-color);
+  box-shadow: 0 0 12px var(--phase-color, rgba(126, 246, 255, 0.6));
+}
+
+.phase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(186, 244, 255, 0.76);
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.phase-badge::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--phase-color);
+  box-shadow: 0 0 14px var(--phase-color, rgba(126, 246, 255, 0.7));
+}
+
+.phases-outro {
+  display: grid;
+  gap: 1rem;
+  padding: 2.4rem;
+  border-radius: 1.3rem;
+  background: rgba(6, 16, 48, 0.82);
+  border: 1px solid rgba(120, 240, 255, 0.18);
+  text-align: left;
+}
+
+.phases-outro h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: rgba(186, 244, 255, 0.76);
+  font-size: 0.95rem;
+}
+
+.phases-outro p {
+  color: rgba(220, 246, 255, 0.85);
+  line-height: 1.8;
+}
+
+@media (max-width: 1080px) {
+  .earth-journey {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 6vw, 3rem);
+  }
+
+  .earth-column {
+    position: relative;
+    top: 0;
+    transform: none;
+  }
+
+  .earth-canvas-wrap {
+    height: clamp(420px, 78vh, 760px);
+  }
+}
+
+@media (max-width: 640px) {
+  .earth-journey {
+    padding: 4.8rem 1.1rem 6rem;
+  }
+
+  .earth-canvas-wrap {
+    height: clamp(320px, 82vw, 520px);
+  }
+
+  .phase-card {
+    padding: 2rem 1.6rem;
+  }
+
+  .earth-annotation {
+    max-width: clamp(160px, 48vw, 220px);
+  }
+
+  .earth-annotation.anchor-north,
+  .earth-annotation.anchor-southwest {
+    left: clamp(4%, 12vw, 16%);
+  }
+}

@@ -1,0 +1,98 @@
+.initial-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 25% 20%, rgba(73, 144, 255, 0.16), transparent 60%),
+    radial-gradient(circle at 75% 80%, rgba(73, 255, 239, 0.18), transparent 62%),
+    rgba(1, 6, 18, 0.94);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.55s ease;
+}
+
+.initial-loader.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.initial-loader__glow {
+  position: absolute;
+  inset: 20% 15% 25% 18%;
+  background: radial-gradient(circle, rgba(142, 247, 255, 0.25) 0%, rgba(48, 79, 149, 0.05) 70%);
+  filter: blur(40px);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.initial-loader__content {
+  position: relative;
+  padding: clamp(2.5rem, 6vw, 3.5rem) clamp(2rem, 5vw, 3rem);
+  border-radius: 1.8rem;
+  border: 1px solid rgba(126, 246, 255, 0.35);
+  background: rgba(4, 14, 36, 0.82);
+  box-shadow: 0 40px 90px rgba(2, 6, 18, 0.8);
+  display: grid;
+  gap: clamp(1.2rem, 3vw, 1.8rem);
+  text-align: left;
+  animation: loaderRise 0.8s ease both;
+}
+
+.initial-loader__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.38em;
+  font-size: 0.7rem;
+  color: rgba(173, 246, 255, 0.78);
+}
+
+.initial-loader__content h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #f7feff;
+}
+
+.initial-loader__content p {
+  font-size: clamp(1rem, 2.8vw, 1.15rem);
+  color: rgba(210, 243, 255, 0.82);
+  letter-spacing: 0.04em;
+}
+
+.initial-loader__progress {
+  display: flex;
+  gap: 0.55rem;
+}
+
+.initial-loader__progress-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(126, 246, 255, 0.25);
+  transition: transform 0.35s ease, background 0.35s ease;
+}
+
+.initial-loader__progress-dot.is-active {
+  background: rgba(126, 246, 255, 0.95);
+  transform: scale(1.2);
+}
+
+@keyframes loaderRise {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .initial-loader,
+  .initial-loader__content,
+  .initial-loader__progress-dot {
+    transition: none !important;
+    animation: none !important;
+  }
+}

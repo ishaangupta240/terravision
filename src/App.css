@@ -1,0 +1,201 @@
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+  font-family: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #f4fcff;
+}
+
+.app-shell .app-nav,
+.app-shell .content-stage {
+  transition: filter 0.45s ease;
+}
+
+.app-shell.is-loader-active {
+  overflow: hidden;
+}
+
+.app-shell.is-loader-active .app-nav,
+.app-shell.is-loader-active .content-stage {
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.app-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem clamp(1.5rem, 4vw, 3rem);
+  background: rgba(3, 8, 30, 0.78);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(126, 246, 255, 0.18);
+}
+
+.app-nav__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  color: rgba(173, 246, 255, 0.85);
+}
+
+.app-nav__brand strong {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 600;
+}
+
+.app-nav__brand span {
+  font-size: 0.7rem;
+}
+
+.app-nav__menu ul {
+  display: flex;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.7rem;
+  color: rgba(168, 230, 255, 0.65);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.35rem 0.4rem;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-link.is-active {
+  color: #8cf7ff;
+}
+
+.nav-link:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.app-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.header-download {
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(126, 246, 255, 0.35);
+  background: rgba(6, 18, 50, 0.6);
+  color: rgba(168, 230, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.65rem;
+  cursor: pointer;
+}
+
+.header-download:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.header-feedback {
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(168, 230, 255, 0.7);
+}
+
+.content-stage {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: clamp(5rem, 12vw, 8rem) clamp(1.5rem, 5vw, 4rem) clamp(2rem, 6vw, 4rem);
+}
+
+.stage-panel {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: stageFade 0.55s ease both;
+}
+
+.journey-loading {
+  min-height: 60vh;
+  display: grid;
+  place-items: center;
+  padding: 4rem;
+  border-radius: 1.5rem;
+  border: 1px dashed rgba(126, 246, 255, 0.25);
+  color: rgba(173, 246, 255, 0.75);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: rgba(6, 16, 48, 0.35);
+  width: min(90vw, 720px);
+}
+
+.stage-journey .stage-panel {
+  align-items: flex-start;
+}
+
+.passport-download-surface {
+  position: fixed;
+  top: -10000px;
+  left: -10000px;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .app-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .app-nav__menu ul {
+    gap: 0.9rem;
+  }
+
+  .app-nav__actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .content-stage {
+    padding-top: clamp(7rem, 18vw, 9rem);
+  }
+}
+
+@keyframes stageFade {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell .app-nav,
+  .app-shell .content-stage {
+    transition: none !important;
+  }
+
+  .stage-panel {
+    animation: none !important;
+  }
+}
