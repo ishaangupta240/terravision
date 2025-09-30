@@ -10,7 +10,6 @@ const StoryPrelude = lazy(() => import('./components/StoryPrelude.jsx'));
 const FutureJourney = lazy(() => import('./components/FutureJourney.jsx'));
 
 const COOKIE_NAME = 'terravision_passport_v1';
-const LOADER_STORAGE_KEY = 'terravision_intro_seen_v1';
 
 const readPassportCookie = () => {
   if (typeof document === 'undefined') {
@@ -98,23 +97,12 @@ const App = () => {
       return undefined;
     }
 
-    try {
-      const introSeen = window.localStorage.getItem(LOADER_STORAGE_KEY);
-      if (!introSeen) {
-        setShouldRenderLoader(true);
-        window.requestAnimationFrame(() => setShowIntroLoader(true));
-        loaderTimerRef.current = window.setTimeout(() => {
-          try {
-            window.localStorage.setItem(LOADER_STORAGE_KEY, 'true');
-          } catch (error) {
-            console.warn('Unable to persist intro loader state', error);
-          }
-          setShowIntroLoader(false);
-        }, 3200);
-      }
-    } catch (error) {
-      console.warn('Intro loader initialization skipped', error);
-    }
+    setShouldRenderLoader(true);
+    window.requestAnimationFrame(() => setShowIntroLoader(true));
+
+    loaderTimerRef.current = window.setTimeout(() => {
+      setShowIntroLoader(false);
+    }, 3200);
 
     return () => {
       if (loaderTimerRef.current) {

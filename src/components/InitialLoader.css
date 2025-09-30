@@ -59,6 +59,26 @@
   letter-spacing: 0.04em;
 }
 
+.initial-loader__meter {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(132, 222, 255, 0.18);
+  overflow: hidden;
+  box-shadow: inset 0 0 12px rgba(12, 44, 82, 0.6);
+}
+
+.initial-loader__meter-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(126, 246, 255, 1), rgba(84, 195, 255, 0.95));
+  border-radius: inherit;
+  transition: width 0.32s ease;
+}
+
 .initial-loader__progress {
   display: flex;
   gap: 0.55rem;
@@ -91,7 +111,8 @@
 @media (prefers-reduced-motion: reduce) {
   .initial-loader,
   .initial-loader__content,
-  .initial-loader__progress-dot {
+  .initial-loader__progress-dot,
+  .initial-loader__meter-fill {
     transition: none !important;
     animation: none !important;
   }

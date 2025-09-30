@@ -12,6 +12,12 @@ const loaderSteps = [
 const InitialLoader = ({ active }) => {
   const [stepIndex, setStepIndex] = useState(0);
   const totalSteps = useMemo(() => loaderSteps.length, []);
+  const progressFraction = useMemo(() => {
+    if (totalSteps === 0) {
+      return 0;
+    }
+    return Math.min((stepIndex + 1) / totalSteps, 1);
+  }, [stepIndex, totalSteps]);
 
   useEffect(() => {
     if (!active || typeof window === 'undefined') {
@@ -19,8 +25,13 @@ const InitialLoader = ({ active }) => {
     }
     setStepIndex(0);
     const interval = window.setInterval(() => {
-      setStepIndex((previous) => (previous + 1) % totalSteps);
-    }, 880);
+      setStepIndex((previous) => {
+        if (previous >= totalSteps - 1) {
+          return totalSteps - 1;
+        }
+        return previous + 1;
+      });
+    }, 800);
     return () => window.clearInterval(interval);
   }, [active, totalSteps]);
 
@@ -31,6 +42,12 @@ const InitialLoader = ({ active }) => {
         <span className="initial-loader__eyebrow">TerraVision</span>
         <h1>Gateway boot sequence</h1>
         <p>{loaderSteps[stepIndex]}</p>
+        <div className="initial-loader__meter" aria-hidden>
+          <span
+            className="initial-loader__meter-fill"
+            style={{ width: `${progressFraction * 100}%` }}
+          />
+        </div>
         <div className="initial-loader__progress" aria-hidden>
           {loaderSteps.map((_, index) => (
             <span
