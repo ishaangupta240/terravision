@@ -54,7 +54,7 @@ const PassportCard = (
       </section>
 
       <div className="passport-qr">
-        <QRCodeSVG value={qrValue} size={132} includeMargin fgColor="#88f2ff" bgColor="transparent" />
+        <QRCodeSVG value={qrValue} size={132} includeMargin fgColor="#47fff1" bgColor="transparent" />
         <span>Scan to verify</span>
       </div>
 

@@ -174,7 +174,21 @@ const miniTaskTargets = {
 
 const useAmbientSound = () => {
   const audioRef = useRef(null);
+  const retryHandlerRef = useRef(null);
   const [enabled, setEnabled] = useState(false);
+
+  const clearGestureRetry = useCallback(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    const handler = retryHandlerRef.current;
+    if (!handler) {
+      return;
+    }
+    window.removeEventListener('pointerdown', handler);
+    window.removeEventListener('keydown', handler);
+    retryHandlerRef.current = null;
+  }, []);
 
   useEffect(() => {
     const audio = new Audio(orbitalSoundscape);
@@ -184,26 +198,57 @@ const useAmbientSound = () => {
     audioRef.current = audio;
 
     return () => {
+      clearGestureRetry();
       audio.pause();
       audio.src = '';
       audioRef.current = null;
     };
-  }, []);
+  }, [clearGestureRetry]);
+
+  const attemptPlay = useCallback(() => {
+    if (!audioRef.current) {
+      return Promise.resolve(false);
+    }
+    audioRef.current.currentTime = 0;
+    return audioRef.current
+      .play()
+      .then(() => {
+        setEnabled(true);
+        clearGestureRetry();
+        return true;
+      })
+      .catch(() => false);
+  }, [clearGestureRetry]);
 
   const disable = useCallback(() => {
-    if (!audioRef.current) return;
-    audioRef.current.pause();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
     setEnabled(false);
-  }, []);
+    clearGestureRetry();
+  }, [clearGestureRetry]);
 
   const enable = useCallback(() => {
-    if (!audioRef.current) return;
-    audioRef.current.currentTime = 0;
-    audioRef.current
-      .play()
-      .then(() => setEnabled(true))
-      .catch(() => {});
-  }, []);
+    if (!audioRef.current) {
+      return;
+    }
+    attemptPlay().then((success) => {
+      if (success || typeof window === 'undefined' || retryHandlerRef.current) {
+        return;
+      }
+      const handler = () => {
+        attemptPlay().then((played) => {
+          if (!played) {
+            retryHandlerRef.current = null;
+          }
+        });
+      };
+      retryHandlerRef.current = handler;
+      window.addEventListener('pointerdown', handler, { once: true });
+      window.addEventListener('keydown', handler, { once: true });
+    });
+  }, [attemptPlay]);
 
   const toggle = useCallback(() => {
     if (enabled) {
@@ -547,27 +592,50 @@ const FutureJourney = ({ profile }) => {
 
   useEffect(() => {
     if (currentStage.id !== 'ai-guide') {
-      setAiMessages([]);
+      if (aiTimerRef.current) {
+        clearTimeout(aiTimerRef.current);
+        aiTimerRef.current = null;
+      }
+      setAiMessages((prev) => (prev.length > 0 ? [] : prev));
       return;
     }
+
     const intro = [
       'Booting TerraVision Companion Core... ',
       `Signal lock confirmed. Welcome, ${profile?.name ?? 'Traveler'}.`,
       'Your heart rate is steady, curiosity levels high. Ready to choose your frontier focus?',
     ];
+
     let index = 0;
-    setAiMessages([]);
+    setAiMessages(() => [intro[index]]);
+    index += 1;
+
     const enqueue = () => {
-      setAiMessages((prev) => [...prev, intro[index]]);
-      index += 1;
-      if (index < intro.length) {
-        aiTimerRef.current = setTimeout(enqueue, 1200);
-      }
+      setAiMessages((prev) => {
+        if (index >= intro.length) {
+          return prev;
+        }
+        const next = [...prev, intro[index]];
+        index += 1;
+        if (index < intro.length) {
+          aiTimerRef.current = setTimeout(enqueue, 1200);
+        } else {
+          aiTimerRef.current = null;
+        }
+        return next;
+      });
     };
-    enqueue();
+
+    if (index < intro.length) {
+      aiTimerRef.current = setTimeout(enqueue, 1200);
+    } else {
+      aiTimerRef.current = null;
+    }
+
     return () => {
       if (aiTimerRef.current) {
         clearTimeout(aiTimerRef.current);
+        aiTimerRef.current = null;
       }
     };
   }, [currentStage.id, profile?.name]);
