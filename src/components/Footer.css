@@ -1,0 +1,35 @@
+.footer {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.mission {
+  font-style: italic;
+  color: #bbb;
+}
+
+.footer-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+}
