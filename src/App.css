@@ -888,16 +888,21 @@
 
   .account-menu {
     position: static;
-    width: 100%;
+    width: calc(100% - 0.4rem);
+    margin: 0.6rem auto 0;
     transform: none;
     opacity: 1;
     pointer-events: auto;
     display: none;
-    margin-top: 0.6rem;
+    left: 0;
+    right: 0;
+    padding: 1.2rem;
+    border-radius: 1.6rem;
   }
 
   .account-menu.is-open {
     display: grid;
+    max-width: 320px;
   }
 
   .app-nav__scrim {
